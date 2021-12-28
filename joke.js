@@ -1,24 +1,18 @@
-let setup = document.querySelector('.para1');
-let punchline = document.querySelector('.para2');
-let button = document.querySelector('#button');
-button.addEventListener('click', () => {
-	setup.innerHTML = '';
-	punchline.innerHTML = '';
-	
-	// Fetch API CALL 
-	fetch('https://official-joke-api.appspot.com/jokes/ten'
-    )
-	.then(res => res.json())
-	.then(data => {
-		
-		let randomNum = Math.floor((Math.random() * data.length));
-			console.log(data[randomNum]);
-			let para1 = document.createTextNode(
-			` ${data[randomNum].setup}`
-			);
-			let para2 = document.createTextNode(` ${data[randomNum].punchline}`);
-			 setup.appendChild(para1);
-			punchline.appendChild(para2);
-	})
-	.catch(error => console.log(error));
-});
+
+const button = document.querySelector(".container button");
+const jokeDiv = document.querySelector(".container .joke p");
+
+//document.addEventListener("DOMContentLoaded", getJock);
+
+button.addEventListener("click", getJock);
+
+async function getJock() {
+  const jokeData = await fetch("https://v2.jokeapi.dev/joke/Programming", {
+    headers: {
+      Accept: "application/json"
+    }
+  });
+  const jokeObj = await jokeData.json();
+  jokeDiv.innerHTML = jokeObj.joke;
+  console.log(jokeData);
+}
